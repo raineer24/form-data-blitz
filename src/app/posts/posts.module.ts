@@ -5,8 +5,35 @@ import { SharedModule } from "../shared/shared.module";
 import { PostListComponent } from "./pages/";
 import { PostsComponent } from "./posts.component";
 
+import {
+  MatCardModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatListModule,
+  MatButtonModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatMenuModule
+} from "@angular/material";
+
 @NgModule({
-  imports: [CommonModule, PostsRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    PostsRoutingModule,
+    SharedModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule
+  ],
   declarations: [PostListComponent, PostsComponent],
   entryComponents: []
 })
