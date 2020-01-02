@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PostsRoutingModule } from "./posts-routing.module";
 import { SharedModule } from "../shared/shared.module";
-import { PostListComponent } from "./pages/";
+import { PostListComponent, PostCreateComponent } from "./pages/";
 import { PostsComponent } from "./posts.component";
 
 import {
@@ -34,7 +34,7 @@ import {
     MatInputModule,
     MatMenuModule
   ],
-  declarations: [PostListComponent, PostsComponent],
+  declarations: [PostListComponent, PostsComponent, PostCreateComponent],
   entryComponents: []
 })
 export class PostsModule {}

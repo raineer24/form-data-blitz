@@ -8,11 +8,23 @@ import { PostsService } from "../../../core/services/posts.service";
   styleUrls: ["./post-list.component.scss"]
 })
 export class PostListComponent implements OnInit {
+  posts: Posts[] = [];
+
   constructor(
     public postsService: PostsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getAllPosts();
+  }
+
+  private getAllPosts() {
+    this.postsService.getPosts().subscribe((posts: Posts[]) => {
+      this.posts = posts;
+
+      console.log(posts["blogs"]);
+    });
+  }
 }
