@@ -1,9 +1,10 @@
-<h2>form create</h2>
 <div class="post-form">
+  <div>
+    <h3>Say something...</h3>
+  </div>
   <form>
     <mat-form-field>
       <textarea
-        placeholder="Input your content"
         matInput
         rows="5"
         cols="30"
@@ -11,6 +12,7 @@
         formControlName="content"
         required
         class="form-control"
+        placeholder="Create Post"
       ></textarea>
       <!-- <mat-error *ngIf="content.invalid"
              >Please enter a post content.</mat-error
