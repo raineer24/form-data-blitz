@@ -4,7 +4,7 @@ import { PostsRoutingModule } from "./posts-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { PostListComponent, PostCreateComponent } from "./pages/";
 import { PostsComponent } from "./posts.component";
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   MatCardModule,
   MatToolbarModule,
@@ -32,7 +32,9 @@ import {
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [PostListComponent, PostsComponent, PostCreateComponent],
   entryComponents: []
