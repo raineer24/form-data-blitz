@@ -4,6 +4,18 @@
   </div>
   <form>
     <mat-form-field>
+      <input
+        matInput
+        placeholder="Input title here"
+        type="text"
+        name="title"
+        required
+        minlength="3"
+        class="form-control"
+      />
+      <!-- <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error> -->
+    </mat-form-field>
+    <mat-form-field>
       <textarea
         matInput
         rows="5"
@@ -14,9 +26,16 @@
         class="form-control"
         placeholder="Create Post"
       ></textarea>
-      <!-- <mat-error *ngIf="content.invalid"
-             >Please enter a post content.</mat-error
-           > -->
     </mat-form-field>
+    <label class="hoverable" for="fileInput">
+      <img
+        [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"
+      />
+      <div class="hover-text">Choose file</div>
+      <div class="background"></div>
+    </label>
+    <br />
+    <input id="fileInput" type="file" (change)="onSelectFile($event)" />
+    <button *ngIf="url" (click)="delete()">delete</button>
   </form>
 </div>
