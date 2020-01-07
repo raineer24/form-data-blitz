@@ -89,6 +89,11 @@ export class PostCreateComponent implements OnInit {
 
     return this.postsService.upload(formData).subscribe(data => {
       console.log(data);
+      if (data.type === HttpEventType.UploadProgress) {
+        this.percentDone = Math.round((100 * data.loaded) / data.total);
+      } else if (event instanceof HttpResponse) {
+        this.uploadSuccess = true;
+      }
 
       this.postForm.reset();
     });

@@ -32,7 +32,7 @@ export class PostsService {
   }
 
   upload(form) {
-    const url = `${this.heroku}/api/v2/blogs`;
+    const url = `${this.baseUrl}/api/v2/blogs`;
     return this.http.post<any>(url, form, {
       reportProgress: true,
       observe: "events"
