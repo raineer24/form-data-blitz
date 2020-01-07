@@ -13,6 +13,7 @@ import { map, tap, catchError } from "rxjs/operators";
 @Injectable({ providedIn: "root" })
 export class PostsService {
   private baseUrl = environment.apiUrl;
+  private heroku = "https://nerblog-app.herokuapp.com";
 
   headers = new HttpHeaders().set("Content-Type", "application/json");
 
@@ -31,7 +32,7 @@ export class PostsService {
   }
 
   upload(form) {
-    const url = `${this.baseUrl}/api/v2/blogs`;
+    const url = `${this.heroku}/api/v2/blogs`;
     return this.http.post<any>(url, form, {
       reportProgress: true,
       observe: "events"
