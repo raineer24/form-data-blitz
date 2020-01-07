@@ -30,7 +30,11 @@ export class PostCreateComponent implements OnInit {
   percentDone: number;
   uploadSuccess: boolean;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    public postsService: PostsService
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -38,6 +42,11 @@ export class PostCreateComponent implements OnInit {
 
   initForm() {
     return (this.postForm = this.fb.group({
+      title: ["", Validators.compose([Validators.required])],
+      content: [
+        "",
+        Validators.compose([Validators.required, Validators.minLength(6)])
+      ],
       image: [null, Validators.required]
     }));
   }
@@ -45,6 +54,7 @@ export class PostCreateComponent implements OnInit {
   onSelectFile(event) {
     this.fileData = <File>event.target.files[0];
     this.postForm.get("image").setValue(this.fileData);
+
     if (this.fileData) {
       const reader = new FileReader();
 
@@ -60,19 +70,28 @@ export class PostCreateComponent implements OnInit {
   onSubmit() {
     const formData = new FormData();
     formData.append("image", this.fileData);
+    formData.append("title", this.postForm.value.title);
+    formData.append("content", this.postForm.value.content);
+    console.log(formData);
 
-    this.http
-      .post("https://file.io", formData, {
-        reportProgress: true,
-        observe: "events"
-      })
-      .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.percentDone = Math.round((100 * event.loaded) / event.total);
-        } else if (event instanceof HttpResponse) {
-          this.uploadSuccess = true;
-        }
-      });
+    // this.http
+    //   .post("https://file.io", formData, {
+    //     reportProgress: true,
+    //     observe: "events"
+    //   })
+    //   .subscribe(event => {
+    //     if (event.type === HttpEventType.UploadProgress) {
+    //       this.percentDone = Math.round((100 * event.loaded) / event.total);
+    //     } else if (event instanceof HttpResponse) {
+    //       this.uploadSuccess = true;
+    //     }
+    //   });
+
+    return this.postsService.upload(formData).subscribe(data => {
+      console.log(data);
+
+      this.postForm.reset();
+    });
   }
   public delete() {
     this.url = null;
