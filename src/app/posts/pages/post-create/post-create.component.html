@@ -36,6 +36,7 @@
       <div class="background"></div>
     </label>
     <br />
+
     <input
       id="fileInput"
       type="file"
@@ -44,6 +45,11 @@
     />
     Upload Percent: {{ percentDone }}% <br />
     <button *ngIf="url" (click)="delete()">delete</button>
+
+    <div *ngIf="showImg">
+      <h1>show me</h1>
+    </div>
+
     <button type="submit" mat-raised-button color="accent">Save post</button>
   </form>
 </div>

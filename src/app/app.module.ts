@@ -7,6 +7,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { UsersModule } from "./users/users.module";
 
+import { ModalModule } from "ngx-bootstrap/modal";
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,7 +18,8 @@ import { UsersModule } from "./users/users.module";
     UsersModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

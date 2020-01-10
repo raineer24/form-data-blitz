@@ -15,7 +15,10 @@ import {
   HttpClient,
   HttpRequest,
   HttpResponse,
-  HttpEventType
+  HttpEventType,
+  HttpBackend,
+  HttpHeaderResponse,
+  HttpEvent
 } from "@angular/common/http";
 @Component({
   selector: "app-post-create",
@@ -26,6 +29,8 @@ export class PostCreateComponent implements OnInit {
   fileData: File = null;
   url: any = null;
   postForm: FormGroup;
+  showImg: boolean;
+  data: any;
 
   percentDone: number;
   uploadSuccess: boolean;
@@ -87,16 +92,28 @@ export class PostCreateComponent implements OnInit {
     //     }
     //   });
 
-    return this.postsService.upload(formData).subscribe(data => {
-      console.log(data);
-      if (data.type === HttpEventType.UploadProgress) {
-        this.percentDone = Math.round((100 * data.loaded) / data.total);
-      } else if (event instanceof HttpResponse) {
-        this.uploadSuccess = true;
-      }
+    return this.postsService
+      .upload(formData)
+      .subscribe((event: HttpEvent<any>) => {
+        console.log(event);
+        // if (data.type === HttpEventType.UploadProgress) {
+        //   this.percentDone = Math.round((100 * data.loaded) / data.total);
+        // } else if (data instanceof HttpResponse) {
+        //   this.uploadSuccess = true;
+        // }
 
-      this.postForm.reset();
-    });
+        switch (event.type) {
+          case HttpEventType.Response:
+            this.data = event.body;
+            if (this.data.message === "Saved") {
+              this.showImg = true;
+            }
+
+            break;
+        }
+
+        this.postForm.reset();
+      });
   }
   public delete() {
     this.url = null;
