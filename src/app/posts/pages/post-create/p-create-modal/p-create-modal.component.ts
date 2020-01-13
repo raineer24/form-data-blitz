@@ -8,11 +8,8 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 export class PostCreateModalComponent implements OnInit {
   modalRef: BsModalRef;
   title;
-  constructor(private modalService: BsModalService) {}
+  closeBtnName: string;
+  constructor(public bsModalRef: BsModalRef) {}
 
   ngOnInit() {}
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
 }

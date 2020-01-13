@@ -8,9 +8,11 @@ import {
 } from "@angular/core";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PostsService } from "../../../core/services/posts.service";
-import { Subscription, Subject, Observable } from "rxjs";
+import { Subscription, Subject, Observable, fromEventPattern } from "rxjs";
 import { Posts } from "../../../core/models/posts";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+
+import { PostCreateModalComponent } from "../post-create/p-create-modal/p-create-modal.component";
 
 import {
   HttpClientModule,
@@ -33,7 +35,7 @@ export class PostCreateComponent implements OnInit {
   postForm: FormGroup;
   showImg: boolean;
   data: any;
-  modalRef: BsModalRef;
+  bsModalRef: BsModalRef;
 
   percentDone: number;
   uploadSuccess: boolean;
@@ -59,8 +61,25 @@ export class PostCreateComponent implements OnInit {
       image: [null, Validators.required]
     }));
   }
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+
+  // openModal(template: TemplateRef<any>) {
+  //   this.modalRef = this.modalService.show(template);
+  // }
+
+  openModalWithComponent() {
+    const initialState = {
+      // list: [
+      //   'Open a modal with component',
+      //   'Pass your data',
+      //   'Do something else',
+      //   '...'
+      // ],
+      title: "Post Create Modal"
+    };
+    this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
+      initialState
+    });
+    this.bsModalRef.content.closeBtnName = "Close";
   }
 
   onSelectFile(event) {
