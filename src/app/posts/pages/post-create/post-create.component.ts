@@ -3,12 +3,14 @@ import {
   OnInit,
   ChangeDetectorRef,
   ViewChild,
-  ElementRef
+  ElementRef,
+  TemplateRef
 } from "@angular/core";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PostsService } from "../../../core/services/posts.service";
 import { Subscription, Subject, Observable } from "rxjs";
 import { Posts } from "../../../core/models/posts";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
 import {
   HttpClientModule,
@@ -31,6 +33,7 @@ export class PostCreateComponent implements OnInit {
   postForm: FormGroup;
   showImg: boolean;
   data: any;
+  modalRef: BsModalRef;
 
   percentDone: number;
   uploadSuccess: boolean;
@@ -38,7 +41,8 @@ export class PostCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    public postsService: PostsService
+    public postsService: PostsService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -54,6 +58,9 @@ export class PostCreateComponent implements OnInit {
       ],
       image: [null, Validators.required]
     }));
+  }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   onSelectFile(event) {
