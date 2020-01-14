@@ -66,6 +66,10 @@ export class PostCreateComponent implements OnInit {
   //   this.modalRef = this.modalService.show(template);
   // }
 
+  openModal() {
+    console.log("clicked");
+  }
+
   openModalWithComponent() {
     const initialState = {
       // list: [

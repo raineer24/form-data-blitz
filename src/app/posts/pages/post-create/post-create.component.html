@@ -3,7 +3,7 @@
     <h3>Say something...</h3>
   </div>
   <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input
         matInput
         placeholder="Input title here"
@@ -14,8 +14,7 @@
         minlength="3"
         class="form-control"
       />
-      <!-- <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error> -->
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field>
       <textarea
         matInput
@@ -26,6 +25,7 @@
         required
         class="form-control"
         placeholder="Create Post"
+        (click)="openModalWithComponent()"
       ></textarea>
     </mat-form-field>
     <label class="hoverable" for="fileInput">
@@ -60,5 +60,18 @@
     >
       Create template modal
     </button>
+    <br />
+    <br />
+    <textarea
+      matInput
+      rows="5"
+      cols="30"
+      name="content"
+      formControlName="content"
+      required
+      class="form-control"
+      placeholder="Create Post"
+      (click)="openModalWithComponent()"
+    ></textarea>
   </form>
 </div>
