@@ -14,6 +14,8 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
 import { PostCreateModalComponent } from "../post-create/p-create-modal/p-create-modal.component";
 
+import { ModalService } from "../../../shared/components/modal/services";
+
 import {
   HttpClientModule,
   HttpClient,
@@ -44,7 +46,8 @@ export class PostCreateComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     public postsService: PostsService,
-    private modalService: BsModalService
+    // private modalService: BsModalService,
+    private modal1Service: ModalService
   ) {}
 
   ngOnInit() {
@@ -66,25 +69,33 @@ export class PostCreateComponent implements OnInit {
   //   this.modalRef = this.modalService.show(template);
   // }
 
-  openModal() {
-    console.log("clicked");
+  openModal1(id: string) {
+    this.modal1Service.open(id);
   }
 
-  openModalWithComponent() {
-    const initialState = {
-      // list: [
-      //   'Open a modal with component',
-      //   'Pass your data',
-      //   'Do something else',
-      //   '...'
-      // ],
-      title: "Post Create Modal"
-    };
-    this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
-      initialState
-    });
-    this.bsModalRef.content.closeBtnName = "Close";
+  closeModal1(id: string) {
+    this.modal1Service.close(id);
   }
+
+  // openModal() {
+  //   console.log("clicked");
+  // }
+
+  // openModalWithComponent() {
+  //   const initialState = {
+  //     // list: [
+  //     //   'Open a modal with component',
+  //     //   'Pass your data',
+  //     //   'Do something else',
+  //     //   '...'
+  //     // ],
+  //     title: "Post Create Modal"
+  //   };
+  //   this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
+  //     initialState
+  //   });
+  //   this.bsModalRef.content.closeBtnName = "Close";
+  // }
 
   onSelectFile(event) {
     this.fileData = <File>event.target.files[0];

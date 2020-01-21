@@ -71,7 +71,12 @@
       required
       class="form-control"
       placeholder="Create Post"
-      (click)="openModalWithComponent()"
+      (click)="openModal1('custom-modal-1')"
     ></textarea>
   </form>
 </div>
+<button (click)="openModal1('custom-modal-1')">Open Modal 1</button>
+<jw-modal id="custom-modal-1">
+  <h1 style="height:1000px">A Tall Custom Modal!</h1>
+  <button (click)="closeModal('custom-modal-1')">Close</button>
+</jw-modal>
