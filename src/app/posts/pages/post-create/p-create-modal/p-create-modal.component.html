@@ -10,8 +10,23 @@
   </button>
 </div>
 <div class="modal-body">
-  <div class="avatar-img example-header-image"></div>
-  <textarea name="" id="" cols="30" rows="10"></textarea>
+  <form class="example-form">
+    <mat-form-field class="example-full-width"
+      ><mat-label>
+        <img
+          matPrefix
+          src="https://image.flaticon.com/icons/png/512/23/23765.png"
+          width="24px"
+          height="24px"
+        />
+      </mat-label>
+      <input matInput placeholder="Title" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label> <mat-icon>favorite</mat-icon> <i> Title</i> </mat-label>
+      <input matInput placeholder="What's on your mind?" />
+    </mat-form-field>
+  </form>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">

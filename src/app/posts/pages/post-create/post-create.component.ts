@@ -78,7 +78,7 @@ export class PostCreateComponent implements OnInit {
       //   'Do something else',
       //   '...'
       // ],
-      title: "Post Create Modal"
+      title: "Create Post"
     };
     this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
       initialState
