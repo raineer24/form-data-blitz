@@ -17,7 +17,7 @@
     height="24px"
     class="avatar-img"
   />
-  <form class="example-form">
+  <form class="example-form" [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width"
       ><mat-label> </mat-label>
       <input matInput placeholder="Title" />
@@ -26,7 +26,13 @@
       <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
       <input matInput placeholder="What's on your mind?" />
     </mat-form-field>
-    <button mat-raised-button color="accent">
+    <button
+      mat-raised-button
+      color="accent"
+      type="file"
+      name="image"
+      (change)="onFileChange($event)"
+    >
       <mat-icon>add_a_photo</mat-icon> Upload photo
     </button>
   </form>

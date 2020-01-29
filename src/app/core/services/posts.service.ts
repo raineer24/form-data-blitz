@@ -33,9 +33,6 @@ export class PostsService {
 
   upload(form) {
     const url = `${this.baseUrl}/api/v2/blogs`;
-    return this.http.post<any>(url, form, {
-      reportProgress: true,
-      observe: "events"
-    });
+    return this.http.post<any>(url, form);
   }
 }
