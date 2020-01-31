@@ -26,15 +26,10 @@
       <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
       <input matInput placeholder="What's on your mind?" />
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="accent"
-      type="file"
-      name="image"
-      (change)="onFileChange($event)"
+    <label for="file-upload" class="custom-file-upload"
+      ><mat-icon>add_a_photo</mat-icon> Upload photo</label
     >
-      <mat-icon>add_a_photo</mat-icon> Upload photo
-    </button>
+    <input type="file" id="file-upload" />
   </form>
 </div>
 <div class="modal-footer">

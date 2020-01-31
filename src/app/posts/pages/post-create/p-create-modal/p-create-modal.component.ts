@@ -7,11 +7,13 @@ import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
   styleUrls: ["./p-create-modal.component.scss"]
 })
 export class PostCreateModalComponent implements OnInit {
+  fileData: File = null;
   modalRef: BsModalRef;
   title;
   closeBtnName: string;
   postForm: FormGroup;
   fd = new FormData();
+  previewUrl: any = null;
 
   constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {}
 
@@ -20,6 +22,25 @@ export class PostCreateModalComponent implements OnInit {
   }
 
   onSubmit() {}
+
+  onFileChange(event) {
+    this.fileData = <File>event.target.files[0];
+    this.preview();
+  }
+
+  preview() {
+    // show preview
+    const mimeType = this.fileData.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileData);
+    reader.onload = _event => {
+      this.previewUrl = reader.result;
+    };
+  }
 
   initForm() {
     return (this.postForm = this.fb.group({
