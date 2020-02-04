@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { PostsService } from "../../../../core/services/posts.service";
 @Component({
   selector: "app-post-create-modal",
   templateUrl: "./p-create-modal.component.html",
@@ -21,7 +22,9 @@ export class PostCreateModalComponent implements OnInit {
     this.initForm();
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const formData = new FormData();
+  }
 
   onFileChange(event) {
     this.fileData = <File>event.target.files[0];

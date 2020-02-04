@@ -20,16 +20,29 @@
   <form class="example-form" [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width"
       ><mat-label> </mat-label>
-      <input matInput placeholder="Title" />
+      <input
+        matInput
+        placeholder="Title"
+        formControlName="title"
+        class="form-control"
+      />
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
-      <input matInput placeholder="What's on your mind?" />
+      <input
+        matInput
+        placeholder="What's on your mind?"
+        formControlName="content"
+        class="form-control"
+      />
     </mat-form-field>
     <label for="file-upload" class="custom-file-upload"
       ><mat-icon>add_a_photo</mat-icon> Upload photo</label
     >
     <input type="file" id="file-upload" />
+    <div>
+      <button mat-raised-button color="accent">Post</button>
+    </div>
   </form>
 </div>
 <div class="modal-footer">
