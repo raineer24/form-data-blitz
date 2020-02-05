@@ -15,6 +15,7 @@ export class PostCreateModalComponent implements OnInit {
   postForm: FormGroup;
   fd = new FormData();
   previewUrl: any = null;
+  submitted = false;
 
   constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {}
 
@@ -22,8 +23,18 @@ export class PostCreateModalComponent implements OnInit {
     this.initForm();
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.postForm.controls;
+  }
+
   onSubmit() {
+    this.submitted = true;
     const formData = new FormData();
+  }
+
+  getErrorMessage() {
+    return this.postForm.value.hasError("required") ? "Required" : "";
   }
 
   onFileChange(event) {

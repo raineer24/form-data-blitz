@@ -24,8 +24,9 @@
         matInput
         placeholder="Title"
         formControlName="title"
-        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
       />
+      <mat-error *ngIf="f.title.errors.required">Title is required </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
@@ -34,10 +35,11 @@
         placeholder="What's on your mind?"
         formControlName="content"
         class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.content.errors }"
       />
     </mat-form-field>
     <label for="file-upload" class="custom-file-upload"
-      ><mat-icon>add_a_photo</mat-icon> Upload photo</label
+      ><mat-icon>add_a_photo</mat-icon> Uploads photo</label
     >
     <input type="file" id="file-upload" />
     <div>
