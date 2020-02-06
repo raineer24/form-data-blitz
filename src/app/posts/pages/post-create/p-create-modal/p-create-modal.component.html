@@ -34,9 +34,11 @@
         matInput
         placeholder="What's on your mind?"
         formControlName="content"
-        class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.content.errors }"
       />
+      <mat-error *ngIf="f.content.errors.required"
+        >Content is required
+      </mat-error>
     </mat-form-field>
     <label for="file-upload" class="custom-file-upload"
       ><mat-icon>add_a_photo</mat-icon> Uploads photo</label
