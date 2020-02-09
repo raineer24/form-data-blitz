@@ -20,13 +20,8 @@
   <form class="example-form" [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width"
       ><mat-label> </mat-label>
-      <input
-        matInput
-        placeholder="Title"
-        formControlName="title"
-        [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
-      />
-      <mat-error *ngIf="f.title.errors.required">Title is required </mat-error>
+      <input matInput placeholder="Title" formControlName="title" />
+      <mat-error *ngIf="f.title.errors?.required">Title is required </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
@@ -34,16 +29,23 @@
         matInput
         placeholder="What's on your mind?"
         formControlName="content"
-        [ngClass]="{ 'is-invalid': submitted && f.content.errors }"
       />
-      <mat-error *ngIf="f.content.errors.required"
+      <mat-error *ngIf="f.content.errors?.required"
         >Content is required
       </mat-error>
     </mat-form-field>
     <label for="file-upload" class="custom-file-upload"
       ><mat-icon>add_a_photo</mat-icon> Uploads photo</label
     >
-    <input type="file" id="file-upload" />
+    <input
+      type="file"
+      id="file-upload"
+      name="image"
+      (change)="onFileChange($event)"
+    />
+    <div #myInput class="image-preview mb-3" *ngIf="previewUrl">
+      <img [src]="previewUrl" height="300" />
+    </div>
     <div>
       <button mat-raised-button color="accent">Post</button>
     </div>

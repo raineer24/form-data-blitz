@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PostsService } from "../../../../core/services/posts.service";
@@ -17,7 +17,11 @@ export class PostCreateModalComponent implements OnInit {
   previewUrl: any = null;
   submitted = false;
 
-  constructor(public bsModalRef: BsModalRef, private fb: FormBuilder) {}
+  constructor(
+    public bsModalRef: BsModalRef,
+    private fb: FormBuilder,
+    public postsService: PostsService
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -31,6 +35,17 @@ export class PostCreateModalComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     const formData = new FormData();
+
+    formData.append("image", this.fileData);
+    formData.append("title", this.postForm.value.title);
+    formData.append("content", this.postForm.value.content);
+
+    return this.postsService.upload(formData).subscribe(data => {
+      console.log("sent");
+      console.log(data);
+
+      this.postForm.reset();
+    });
   }
 
   getErrorMessage() {
