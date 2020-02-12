@@ -2,6 +2,14 @@ import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PostsService } from "../../../../core/services/posts.service";
+
+import {
+  HttpClientModule,
+  HttpClient,
+  HttpRequest,
+  HttpResponse,
+  HttpEventType
+} from "@angular/common/http";
 @Component({
   selector: "app-post-create-modal",
   templateUrl: "./p-create-modal.component.html",
@@ -16,6 +24,9 @@ export class PostCreateModalComponent implements OnInit {
   fd = new FormData();
   previewUrl: any = null;
   submitted = false;
+
+  percentDone: number;
+  uploadSuccess: boolean;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -43,6 +54,12 @@ export class PostCreateModalComponent implements OnInit {
     return this.postsService.upload(formData).subscribe(data => {
       console.log("sent");
       console.log(data);
+
+      if (data.type === HttpEventType.UploadProgress) {
+        this.percentDone = Math.round((100 * data.loaded) / data.total);
+      } else if (event instanceof HttpResponse) {
+        this.uploadSuccess = true;
+      }
 
       this.postForm.reset();
     });

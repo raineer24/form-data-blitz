@@ -5,7 +5,8 @@ import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
-  HttpEventType
+  HttpEventType,
+  HttpProgressEvent
 } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError } from "rxjs/operators";
@@ -33,6 +34,34 @@ export class PostsService {
 
   upload(form) {
     const url = `${this.baseUrl}/api/v2/blogs`;
-    return this.http.post<any>(url, form);
+    return this.http.post<any>(url, form, {
+      reportProgress: true,
+      observe: "events"
+    });
+  }
+
+  basicUpload(files: FileList) {
+    const url = `${this.baseUrl}/api/v2/blogs`;
+    const formData = new FormData();
+    Array.from(files).forEach(f => {
+      formData.append("file", f);
+    });
+    return this.http.post<any>(url, formData);
+  }
+
+  uploadAndProgress(files: FileList) {
+    const url = `${this.baseUrl}/api/v2/blogs`;
+    const formData = new FormData();
+    Array.from(files).forEach(f => {
+      formData.append("file", f);
+    });
+    return this.http.post(url, formData, {
+      reportProgress: true,
+      observe: "events"
+    });
+  }
+
+  calcProgressPercent(event: HttpProgressEvent) {
+    return Math.round((1000 * event.loaded) / event.total);
   }
 }

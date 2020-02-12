@@ -46,6 +46,8 @@
     <div #myInput class="image-preview mb-3" *ngIf="previewUrl">
       <img [src]="previewUrl" height="300" />
     </div>
+    Upload Percent: {{ percentDone }}% <br />
+    <file-upload></file-upload>
     <div>
       <button mat-raised-button color="accent">Post</button>
     </div>
