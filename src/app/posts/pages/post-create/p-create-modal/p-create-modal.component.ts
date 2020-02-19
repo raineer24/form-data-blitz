@@ -95,7 +95,7 @@ export class PostCreateModalComponent implements OnInit {
         "",
         Validators.compose([Validators.required, Validators.minLength(6)])
       ],
-      image: [null, Validators.required]
+      image: ["", Validators.required]
     }));
   }
 }
