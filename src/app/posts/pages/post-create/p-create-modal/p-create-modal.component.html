@@ -10,52 +10,18 @@
   </button>
 </div>
 <div class="modal-body">
-  <img
-    matPrefix
-    src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-    width="24px"
-    height="24px"
-    class="avatar-img"
-  />
-  <form class="example-form" [formGroup]="postForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width"
-      ><mat-label> </mat-label>
-      <input matInput placeholder="Title" formControlName="title" />
-      <mat-error *ngIf="f.title.errors?.required">Title is required </mat-error>
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label> <mat-icon>favorite</mat-icon> <i> Content</i> </mat-label>
-      <input
-        matInput
-        placeholder="What's on your mind?"
-        formControlName="content"
-      />
-      <mat-error *ngIf="f.content.errors?.required"
-        >Content is required
-      </mat-error>
-    </mat-form-field>
-    <label for="file-upload" class="custom-file-upload"
-      ><mat-icon>add_a_photo</mat-icon> Uploads photo</label
-    >
-    <input
-      type="file"
-      id="file-upload"
-      name="image"
-      (change)="onFileChange($event)"
-    />
-    <div #myInput class="image-preview mb-3" *ngIf="previewUrl">
-      <img [src]="previewUrl" height="300" />
+  <form [formGroup]="postForm">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" formControlName="title" />
     </div>
-    Upload Percent: {{ percentDone }}% <br />
-    <file-upload controlName="image"></file-upload>
-    <div>
-      <button mat-raised-button color="accent">Post</button>
+    <div class="form-group">
+      <label>Content</label>
+      <input type="text" formControlName="content" />
     </div>
+
+    <file-upload formControlName="image" [progress]="progress"></file-upload>
+
+    <button>Submit</button>
   </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
-    {{ closeBtnName }}
-  </button>
-  <pre>{{ postForm.value | json }}</pre>
 </div>

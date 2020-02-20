@@ -6,7 +6,8 @@ import {
   PostListComponent,
   PostCreateComponent,
   PostCreateModalComponent,
-  FileUploadComponent
+  FileUploadComponent,
+  ProgressComponent
 } from "./pages/";
 import { PostsComponent } from "./posts.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -49,7 +50,8 @@ import { ModalModule } from "ngx-bootstrap/modal";
     PostsComponent,
     PostCreateComponent,
     PostCreateModalComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    ProgressComponent
   ],
   entryComponents: [PostCreateModalComponent]
 })

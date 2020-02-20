@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ElementRef, HostListener } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import {
   NgForm,
@@ -6,7 +6,9 @@ import {
   FormBuilder,
   Validators,
   ControlContainer,
-  FormControl
+  FormControl,
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR
 } from "@angular/forms";
 import { PostsService } from "../../../../../core/services/posts.service";
 
@@ -20,46 +22,46 @@ import {
 @Component({
   selector: "file-upload",
   template: `
-    <input type="file" (change)="upload($event.target.files)" /> {{ progress }}%
+    <div class="file-drop-area">
+      <span class="fake-btn">Choose File</span>
+      <span class="file-msg">{{
+        file ? file.name : "or drag and drop file here"
+      }}</span>
+      <input class="file-input" type="file" />
+    </div>
+    <app-progress [progress]="progress"></app-progress>
   `,
-  styleUrls: ["./file-upload.component.scss"]
+  styleUrls: ["./file-upload.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: FileUploadComponent,
+      multi: true
+    }
+  ]
 })
 export class FileUploadComponent {
-  public progress: number;
-  private _control: FormControl;
+  @Input() progress;
+  onChange: Function;
+  private file: File | null = null;
 
-  constructor(
-    private readonly container: ControlContainer,
-    public postsService: PostsService
-  ) {}
-
-  @Input() set control(value: FormControl) {
-    this._control = value;
+  @HostListener("change", ["$event.target.files"]) emitFiles(event) {
+    const file = event && event.item(0);
+    this.file = file;
+    console.log(this.file);
   }
 
-  @Input() set controlName(title: string) {
-    this._control = this.container.control.get(title) as FormControl;
+  constructor(private host: ElementRef<HTMLInputElement>) {}
+
+  writeValue(value: null) {
+    // clear file input
+    this.host.nativeElement.value = "";
+    this.file = null;
   }
 
-  upload(files: FileList) {
-    // set it to nothing since we're about to upload a new value
-    // also this means that it'll be validated correctly
-    this._control.setValue(null);
-
-    this.postsService.uploadAndProgress(files).subscribe(event => {
-      console.log(files);
-      console.log(event);
-      
-
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress = this.postsService.calcProgressPercent(event);
-      } else if (event instanceof HttpResponse) {
-        // the actual should be returned as something like
-        // this._control.setValue(event.body.url)
-        console.log(event.body);
-
-        this._control.setValue("some url");
-      }
-    });
+  registerOnChange(fn: Function) {
+    this.onChange = fn;
   }
+
+  registerOnTouched(fn: Function) {}
 }

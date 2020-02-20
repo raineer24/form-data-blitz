@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PostsService } from "../../../../core/services/posts.service";
+import { requiredFileType } from "./upload-file-validators";
 
 import {
   HttpClientModule,
@@ -44,25 +45,21 @@ export class PostCreateModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    const formData = new FormData();
-
-    formData.append("image", this.fileData);
-    formData.append("title", this.postForm.value.title);
-    formData.append("content", this.postForm.value.content);
-
-    return this.postsService.upload(formData).subscribe(data => {
-      console.log("sent");
-      console.log(data);
-
-      if (data.type === HttpEventType.UploadProgress) {
-        this.percentDone = Math.round((100 * data.loaded) / data.total);
-      } else if (event instanceof HttpResponse) {
-        this.uploadSuccess = true;
-      }
-
-      this.postForm.reset();
-    });
+    // this.submitted = true;
+    // const formData = new FormData();
+    // formData.append("image", this.fileData);
+    // formData.append("title", this.postForm.value.title);
+    // formData.append("content", this.postForm.value.content);
+    // return this.postsService.upload(formData).subscribe(data => {
+    //   console.log("sent");
+    //   console.log(data);
+    //   if (data.type === HttpEventType.UploadProgress) {
+    //     this.percentDone = Math.round((100 * data.loaded) / data.total);
+    //   } else if (event instanceof HttpResponse) {
+    //     this.uploadSuccess = true;
+    //   }
+    //   this.postForm.reset();
+    // });
   }
 
   getErrorMessage() {
@@ -95,7 +92,7 @@ export class PostCreateModalComponent implements OnInit {
         "",
         Validators.compose([Validators.required, Validators.minLength(6)])
       ],
-      image: ["", Validators.required]
+      image: ["", Validators.required, requiredFileType("png")]
     }));
   }
 }
