@@ -10,11 +10,17 @@
   </button>
 </div>
 <div class="modal-body">
-  <form [formGroup]="postForm">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Title</label>
-      <input type="text" formControlName="title" />
+      <input type="text" class="form-control" formControlName="title" />
+      <div class="invalid-feedback" style="display: block">
+        <ng-container *ngIf="hasError('title', 'required')"
+          >This field is required</ng-container
+        >
+      </div>
     </div>
+
     <div class="form-group">
       <label>Content</label>
       <input type="text" formControlName="content" />

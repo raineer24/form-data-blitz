@@ -45,7 +45,11 @@ export class PostCreateModalComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.submitted = true;
+    this.submitted = false;
+    if (!this.postForm.valid) {
+      markAllAsDirty(this.postForm);
+      return;
+    }
     // const formData = new FormData();
     // formData.append("image", this.fileData);
     // formData.append("title", this.postForm.value.title);
@@ -60,6 +64,13 @@ export class PostCreateModalComponent implements OnInit {
     //   }
     //   this.postForm.reset();
     // });
+  }
+
+  hasError(field: string, error: string) {
+    const control = this.postForm.get(field);
+    console.log(control.dirty);
+
+    return control.dirty && control.hasError(error);
   }
 
   getErrorMessage() {
@@ -87,12 +98,18 @@ export class PostCreateModalComponent implements OnInit {
 
   initForm() {
     return (this.postForm = this.fb.group({
-      title: ["", Validators.compose([Validators.required])],
+      title: ["", Validators.required],
       content: [
         "",
         Validators.compose([Validators.required, Validators.minLength(6)])
       ],
       image: ["", Validators.required, requiredFileType("png")]
     }));
+  }
+}
+
+export function markAllAsDirty(form: FormGroup) {
+  for (const control of Object.keys(form.controls)) {
+    form.controls[control].markAsDirty();
   }
 }
