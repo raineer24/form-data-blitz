@@ -23,10 +23,25 @@
 
     <div class="form-group">
       <label>Content</label>
-      <input type="text" formControlName="content" />
+      <input type="text" formControlName="content" class="form-control" />
+      <div class="invalid-feedback" style="display: block">
+        <ng-container *ngIf="hasError('content', 'required')"
+          >This field is required</ng-container
+        >
+      </div>
     </div>
 
-    <file-upload formControlName="image" [progress]="progress"></file-upload>
+    <div class="form-group">
+      <file-upload formControlName="image" [progress]="progress"></file-upload>
+      <div class="invalid-feedback" style="display: block">
+        <ng-container *ngIf="hasError('image', 'required')"
+          >This field is required</ng-container
+        >
+        <ng-container *ngIf="hasError('image', 'requiredFileType')"
+          >Only PNG / JPG 🤡</ng-container
+        >
+      </div>
+    </div>
 
     <button>Submit</button>
   </form>

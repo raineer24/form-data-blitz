@@ -1,6 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  NgForm,
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { PostsService } from "../../../../core/services/posts.service";
 import { requiredFileType } from "./upload-file-validators";
 
@@ -17,6 +23,7 @@ import {
   styleUrls: ["./p-create-modal.component.scss"]
 })
 export class PostCreateModalComponent implements OnInit {
+  progress = 0;
   fileData: File = null;
   modalRef: BsModalRef;
   title;
@@ -68,7 +75,6 @@ export class PostCreateModalComponent implements OnInit {
 
   hasError(field: string, error: string) {
     const control = this.postForm.get(field);
-    console.log(control.dirty);
 
     return control.dirty && control.hasError(error);
   }
@@ -103,7 +109,10 @@ export class PostCreateModalComponent implements OnInit {
         "",
         Validators.compose([Validators.required, Validators.minLength(6)])
       ],
-      image: ["", Validators.required, requiredFileType("png")]
+      image: new FormControl(null, [
+        Validators.required,
+        requiredFileType("png" && "jpg")
+      ])
     }));
   }
 }

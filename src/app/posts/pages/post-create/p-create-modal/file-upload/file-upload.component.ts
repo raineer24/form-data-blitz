@@ -45,10 +45,10 @@ export class FileUploadComponent {
   onChange: Function;
   private file: File | null = null;
 
-  @HostListener("change", ["$event.target.files"]) emitFiles(event) {
+  @HostListener("change", ["$event.target.files"]) emitFiles(event: FileList) {
     const file = event && event.item(0);
+    this.onChange(file);
     this.file = file;
-    console.log(this.file);
   }
 
   constructor(private host: ElementRef<HTMLInputElement>) {}
