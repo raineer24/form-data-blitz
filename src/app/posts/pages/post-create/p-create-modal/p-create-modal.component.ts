@@ -1,3 +1,11 @@
+import {
+  HttpClientModule,
+  HttpClient,
+  HttpRequest,
+  HttpResponse,
+  HttpEventType,
+  HttpEvent
+} from "@angular/common/http";
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import {
@@ -7,16 +15,26 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
+import { filter, map, tap } from "rxjs/operators";
+import { pipe } from "rxjs";
 import { PostsService } from "../../../../core/services/posts.service";
 import { requiredFileType } from "./upload-file-validators";
 
-import {
-  HttpClientModule,
-  HttpClient,
-  HttpRequest,
-  HttpResponse,
-  HttpEventType
-} from "@angular/common/http";
+export function UploadProgress<T>(cb: (progress: number) => void) {
+  return tap((event: HttpEvent<T>) => {
+    if (event.type === HttpEventType.UploadProgress) {
+      cb(Math.round((100 * event.loaded) / event.total));
+    }
+  });
+}
+
+export function toResponseBody<T>() {
+  return pipe(
+    filter((event: HttpEvent<T>) => event.type === HttpEventType.Response),
+    map((res: HttpResponse<T>) => res.body)
+  );
+}
+
 @Component({
   selector: "app-post-create-modal",
   templateUrl: "./p-create-modal.component.html",
@@ -57,20 +75,18 @@ export class PostCreateModalComponent implements OnInit {
       markAllAsDirty(this.postForm);
       return;
     }
-    // const formData = new FormData();
-    // formData.append("image", this.fileData);
-    // formData.append("title", this.postForm.value.title);
-    // formData.append("content", this.postForm.value.content);
-    // return this.postsService.upload(formData).subscribe(data => {
-    //   console.log("sent");
-    //   console.log(data);
-    //   if (data.type === HttpEventType.UploadProgress) {
-    //     this.percentDone = Math.round((100 * data.loaded) / data.total);
-    //   } else if (event instanceof HttpResponse) {
-    //     this.uploadSuccess = true;
-    //   }
-    //   this.postForm.reset();
-    // });
+
+    return this.postsService
+      .upload(this.postForm.value)
+      .pipe(
+        UploadProgress(progress => (this.progress = progress)),
+        toResponseBody()
+      )
+      .subscribe(data => {
+        this.progress = 0;
+        this.submitted = true;
+        this.postForm.reset;
+      });
   }
 
   hasError(field: string, error: string) {
@@ -120,5 +136,14 @@ export class PostCreateModalComponent implements OnInit {
 export function markAllAsDirty(form: FormGroup) {
   for (const control of Object.keys(form.controls)) {
     form.controls[control].markAsDirty();
+  }
+}
+
+export function toFormData<T>(formValue: T) {
+  const formData = new FormData();
+
+  for (const key of Object.keys(formValue)) {
+    const value = formValue[key];
+    formData.append(key, value);
   }
 }

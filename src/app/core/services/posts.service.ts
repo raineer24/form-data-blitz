@@ -1,5 +1,6 @@
 import { Posts } from "./../models/posts";
 import { Injectable } from "@angular/core";
+import { pipe } from 'rxjs';
 import { Subject, Observable, throwError } from "rxjs";
 import {
   HttpClient,
@@ -32,9 +33,9 @@ export class PostsService {
     );
   }
 
-  upload(form) {
+  upload(toFormData) {
     const url = `${this.baseUrl}/api/v2/blogs`;
-    return this.http.post<any>(url, form, {
+    return this.http.post<any>(url, toFormData, {
       reportProgress: true,
       observe: "events"
     });
@@ -63,5 +64,14 @@ export class PostsService {
 
   calcProgressPercent(event: HttpProgressEvent) {
     return Math.round((1000 * event.loaded) / event.total);
+  }
+}
+
+export function toFormData<T>(formValue: T) {
+  const formData = new FormData();
+
+  for (const key of Object.keys(formValue)) {
+    const value = formValue[key];
+    formData.append(key, value);
   }
 }
