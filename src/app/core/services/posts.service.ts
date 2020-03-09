@@ -1,6 +1,6 @@
 import { Posts } from "./../models/posts";
 import { Injectable } from "@angular/core";
-import { pipe } from 'rxjs';
+import { pipe } from "rxjs";
 import { Subject, Observable, throwError } from "rxjs";
 import {
   HttpClient,
@@ -33,9 +33,18 @@ export class PostsService {
     );
   }
 
-  upload(toFormData) {
+  upload(formValue) {
     const url = `${this.baseUrl}/api/v2/blogs`;
-    return this.http.post<any>(url, toFormData, {
+    const formData = new FormData();
+    console.log(formData);
+
+    for (const key of Object.keys(formValue)) {
+      const value = formValue[key];
+      console.log(value);
+      formData.append(key, value);
+    }
+
+    return this.http.post<any>(url, formData, {
       reportProgress: true,
       observe: "events"
     });
@@ -67,11 +76,13 @@ export class PostsService {
   }
 }
 
-export function toFormData<T>(formValue: T) {
-  const formData = new FormData();
+// export function toFormData<T>(formValue: T) {
+//   const formData = new FormData();
 
-  for (const key of Object.keys(formValue)) {
-    const value = formValue[key];
-    formData.append(key, value);
-  }
-}
+//   for (const key of Object.keys(formValue)) {
+//     const value = formValue[key];
+//     console.log(value);
+//     formData.append(key, value);
+//   }
+//   return formData;
+// }

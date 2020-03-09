@@ -49,6 +49,7 @@ export class FileUploadComponent {
     const file = event && event.item(0);
     this.onChange(file);
     this.file = file;
+    console.log(this.file);
   }
 
   constructor(private host: ElementRef<HTMLInputElement>) {}

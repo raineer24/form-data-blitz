@@ -65,9 +65,9 @@ export class PostCreateModalComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() {
-    return this.postForm.controls;
-  }
+  // get f() {
+  //   return this.postForm.controls;
+  // }
 
   onSubmit() {
     this.submitted = false;
@@ -75,6 +75,7 @@ export class PostCreateModalComponent implements OnInit {
       markAllAsDirty(this.postForm);
       return;
     }
+    console.log(this.postForm.value.image);
 
     return this.postsService
       .upload(this.postForm.value)
@@ -95,28 +96,28 @@ export class PostCreateModalComponent implements OnInit {
     return control.dirty && control.hasError(error);
   }
 
-  getErrorMessage() {
-    return this.postForm.value.hasError("required") ? "Required" : "";
-  }
+  // getErrorMessage() {
+  //   return this.postForm.value.hasError("required") ? "Required" : "";
+  // }
 
-  onFileChange(event) {
-    this.fileData = <File>event.target.files[0];
-    this.preview();
-  }
+  // onFileChange(event) {
+  //   this.fileData = <File>event.target.files[0];
+  //   this.preview();
+  // }
 
-  preview() {
-    // show preview
-    const mimeType = this.fileData.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+  // preview() {
+  //   // show preview
+  //   const mimeType = this.fileData.type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     return;
+  //   }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
-    reader.onload = _event => {
-      this.previewUrl = reader.result;
-    };
-  }
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(this.fileData);
+  //   reader.onload = _event => {
+  //     this.previewUrl = reader.result;
+  //   };
+  // }
 
   initForm() {
     return (this.postForm = this.fb.group({
@@ -139,11 +140,11 @@ export function markAllAsDirty(form: FormGroup) {
   }
 }
 
-export function toFormData<T>(formValue: T) {
-  const formData = new FormData();
-
-  for (const key of Object.keys(formValue)) {
-    const value = formValue[key];
-    formData.append(key, value);
-  }
-}
+// export function toFormData<T>(formValue: T) {
+//   const formData = new FormData();
+//   console.log(this.postForm.value.image);
+//   for (const key of Object.keys(formValue)) {
+//     const value = formValue[key];
+//     formData.append(key, value);
+//   }
+// }
