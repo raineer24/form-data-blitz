@@ -87,6 +87,7 @@ export class PostCreateModalComponent implements OnInit {
         this.progress = 0;
         this.submitted = true;
         this.postForm.reset;
+        this.bsModalRef.hide();
       });
   }
 
