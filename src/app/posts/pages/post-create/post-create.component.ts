@@ -78,10 +78,13 @@ export class PostCreateComponent implements OnInit {
       //   'Do something else',
       //   '...'
       // ],
+
       title: "Create Post"
     };
     this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
-      initialState
+      initialState,
+      animated: false,
+      backdrop: "static"
     });
     this.bsModalRef.content.closeBtnName = "Close";
   }

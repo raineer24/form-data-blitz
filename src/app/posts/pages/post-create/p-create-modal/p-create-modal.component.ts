@@ -62,6 +62,7 @@ export class PostCreateModalComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.bsModalRef.hide();
   }
 
   // convenience getter for easy access to form fields
