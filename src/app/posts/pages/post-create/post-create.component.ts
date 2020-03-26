@@ -78,10 +78,13 @@ export class PostCreateComponent implements OnInit {
       //   'Do something else',
       //   '...'
       // ],
-      title: "Post Create Modal"
+
+      title: "Create Post"
     };
     this.bsModalRef = this.modalService.show(PostCreateModalComponent, {
-      initialState
+      initialState,
+      animated: false,
+      backdrop: "static"
     });
     this.bsModalRef.content.closeBtnName = "Close";
   }
@@ -102,49 +105,6 @@ export class PostCreateComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    const formData = new FormData();
-    formData.append("image", this.fileData);
-    formData.append("title", this.postForm.value.title);
-    formData.append("content", this.postForm.value.content);
-    console.log(formData);
-
-    // this.http
-    //   .post("https://file.io", formData, {
-    //     reportProgress: true,
-    //     observe: "events"
-    //   })
-    //   .subscribe(event => {
-    //     if (event.type === HttpEventType.UploadProgress) {
-    //       this.percentDone = Math.round((100 * event.loaded) / event.total);
-    //     } else if (event instanceof HttpResponse) {
-    //       this.uploadSuccess = true;
-    //     }
-    //   });
-
-    return this.postsService
-      .upload(formData)
-      .subscribe((event: HttpEvent<any>) => {
-        console.log(event);
-        // if (data.type === HttpEventType.UploadProgress) {
-        //   this.percentDone = Math.round((100 * data.loaded) / data.total);
-        // } else if (data instanceof HttpResponse) {
-        //   this.uploadSuccess = true;
-        // }
-
-        switch (event.type) {
-          case HttpEventType.Response:
-            this.data = event.body;
-            if (this.data.message === "Saved") {
-              this.showImg = true;
-            }
-
-            break;
-        }
-
-        this.postForm.reset();
-      });
-  }
   public delete() {
     this.url = null;
   }

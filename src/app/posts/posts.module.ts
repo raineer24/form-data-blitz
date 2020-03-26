@@ -5,7 +5,9 @@ import { SharedModule } from "../shared/shared.module";
 import {
   PostListComponent,
   PostCreateComponent,
-  PostCreateModalComponent
+  PostCreateModalComponent,
+  FileUploadComponent,
+  ProgressComponent
 } from "./pages/";
 import { PostsComponent } from "./posts.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -47,7 +49,9 @@ import { ModalModule } from "ngx-bootstrap/modal";
     PostListComponent,
     PostsComponent,
     PostCreateComponent,
-    PostCreateModalComponent
+    PostCreateModalComponent,
+    FileUploadComponent,
+    ProgressComponent
   ],
   entryComponents: [PostCreateModalComponent]
 })

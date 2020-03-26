@@ -28,50 +28,5 @@
         (click)="openModalWithComponent()"
       ></textarea>
     </mat-form-field>
-    <label class="hoverable" for="fileInput">
-      <img
-        [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"
-      />
-      <div class="hover-text">Choose file</div>
-      <div class="background"></div>
-    </label>
-    <br />
-
-    <input
-      id="fileInput"
-      type="file"
-      (change)="onSelectFile($event)"
-      name="image"
-    />
-    Upload Percent: {{ percentDone }}% <br />
-    <button *ngIf="url" (click)="delete()">delete</button>
-
-    <div *ngIf="showImg">
-      <h1>show me</h1>
-    </div>
-
-    <button type="submit" mat-raised-button color="accent">Save post</button>
-    <br />
-
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="openModalWithComponent()"
-    >
-      Create template modal
-    </button>
-    <br />
-    <br />
-    <textarea
-      matInput
-      rows="5"
-      cols="30"
-      name="content"
-      formControlName="content"
-      required
-      class="form-control"
-      placeholder="Create Post"
-      (click)="openModalWithComponent()"
-    ></textarea>
   </form>
 </div>
